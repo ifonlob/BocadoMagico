@@ -49,6 +49,7 @@ main{
     box-shadow: var(--shadow);
 }
 
+
 .cabecera__logo {
     width: 60px;
     transition: transform 0.3s ease;
@@ -59,8 +60,6 @@ main{
 }
 
 .cabecera__titulo {
-
-    width: 70%;
     font-size: 1.5rem;
     font-weight: 700;
     text-align: center;
@@ -250,4 +249,26 @@ main{
     margin-top: 2rem;
     font-size: 0.9rem;
     color: #888;
+}
+
+/* =========================
+   5. Estilos feedback visual
+   ========================= */
+
+.mensaje-error {
+    color: #d62828;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-align: center;
+    margin-top: 1rem;
+    font-family: var(--fuente-base);
+}
+
+.mensaje-exito {
+    color: #2b9348;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-align: center;
+    margin-top: 1rem;
+    font-family: var(--fuente-base);
 }
