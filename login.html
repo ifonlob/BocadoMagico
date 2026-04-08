@@ -1,23 +1,35 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bocado Mágico | Sistema de logueo</title>
+    <title>Bocado Mágico | Acceso</title>
     <link rel="stylesheet" href="./assets/css/styles.css">
 </head>
 <body>
-    <article class="login">
-        <h1 class="login__titulo">Login</h1>
-        <form action="#post" class = "login__formulario">
-            <label class="login__etiqueta">Usuario
-                <input class="login__usuario" type="text" required>
-            </label>
-            <label class="login__etiqueta">Contraseña
-                <input class="login__contrasena" type="text" required>
-            </label>
-            <button class= "login__boton" type="submit">Acceder</button>
-        </form>
-    </article>
+<header class="cabecera">
+    <a href="./index.html"><img class="cabecera__logo" src="./assets/imgs/logo.png" alt="Volver"></a>
+    <h1 class="cabecera__titulo">Bocado Mágico</h1>
+    <a class="navegacion__enlace" href="./index.html">Volver a inicio</a>
+</header>
+
+<main class="login">
+    <h2 class="login__titulo">Login</h2>
+    <form id="formularioLogin" class="login__formulario">
+        <label class="login__etiqueta">
+            Usuario
+            <input id="usuario" class="login__input" type="text" placeholder="Ingresa tu usuario" required>
+        </label>
+        <label class="login__etiqueta">
+            Contraseña
+            <input id="password" class="login__input" type="password" placeholder="Ingresa tu contraseña" required>
+        </label>
+        <button class="login__boton" type="submit">Acceder</button>
+    </form>
+</main>
+
+<footer class="pie-pagina">
+    <p>&copy; 2026 Bocado Mágico.</p>
+</footer>
 </body>
 </html>
