@@ -42,7 +42,8 @@ main{
    ========================= */
 .cabecera {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-evenly;
+    gap:1rem;
     align-items: center;
     background-color: var(--color-blanco);
     padding: 1rem;
@@ -60,6 +61,7 @@ main{
 }
 
 .cabecera__titulo {
+    width: 80%;
     font-size: 1.5rem;
     font-weight: 700;
     text-align: center;
@@ -67,10 +69,15 @@ main{
     color: var(--color-oscuro);
 }
 
+.navegacion__enlace{
+    width: 20%;
+}
+
 .navegacion__identificacion{
     display: flex;
     justify-content: space-around;
     align-items: center;
+    width: 20%;
     gap:0.5rem;
     padding:2rem;
     font-family: Montserrat;
