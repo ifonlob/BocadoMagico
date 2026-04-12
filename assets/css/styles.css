@@ -69,10 +69,6 @@ main{
     color: var(--color-oscuro);
 }
 
-.navegacion__enlace{
-    width: 20%;
-}
-
 .navegacion__identificacion{
     display: flex;
     justify-content: space-around;
@@ -91,8 +87,8 @@ main{
 }
 
 .navegacion__enlace {
-    color: var(--color-oscuro);
     text-decoration: none;
+    color: var(--color-oscuro);
     font-weight: 600;
     font-size: 0.9rem;
     display: flex;
@@ -105,7 +101,6 @@ main{
 
 .navegacion__enlace:hover {
     background-color: var(--color-principal);
-    color: var(--color-blanco);
 }
 
 .navegacion__usuario {
