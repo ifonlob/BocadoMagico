@@ -32,7 +32,7 @@ const inicializarAutenticacion = () => {
             formulario.append(feedbackExito);
 
             setTimeout(() => {
-                window.location.href = "index.html";
+                window.location.href = "bienvenida.html";
             }, 1000);
         } else {
             const mensajeError = document.createElement("p");
