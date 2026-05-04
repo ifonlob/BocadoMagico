@@ -4,9 +4,14 @@ services:
   bocado-magico:
     build: .
     container_name: bocado_magico_app
-    ports:
-      - "80:80"
-      - "443:443"
-    volumes:
-      - ./ssl:/etc/nginx/ssl:ro
+    expose:
+      - "443"
     restart: always
+
+  cloudflared:
+    image: cloudflare/cloudflared:latest
+    container_name: bocado_tunnel
+    command: tunnel --url https://bocado-magico:443 --no-autoupdate --no-tls-verify
+    restart: always
+    depends_on:
+      - bocado-magico
