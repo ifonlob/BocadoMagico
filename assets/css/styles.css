@@ -87,7 +87,7 @@ main{
 }
 
 .navegacion__enlace {
-    text-decoration: none;
+    width: 15%;
     color: var(--color-oscuro);
     font-weight: 600;
     font-size: 0.9rem;
@@ -95,7 +95,7 @@ main{
     align-items: center;
     gap: 0.5rem;
     padding: 0.5rem 1rem;
-    border-radius: 5px;
+    border-radius: 1rem;
     transition: all 0.3s ease;
 }
 
