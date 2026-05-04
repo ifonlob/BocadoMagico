@@ -50,6 +50,11 @@ main{
     box-shadow: var(--shadow);
 }
 
+.cabecera__enlace{
+    width: 20%;
+    text-align: center;
+}
+
 
 .cabecera__logo {
     width: 60px;
@@ -61,19 +66,26 @@ main{
 }
 
 .cabecera__titulo {
-    width: 80%;
-    font-size: 1.5rem;
+    width: 60%;
+    font-size: 2rem;
     font-weight: 700;
     text-align: center;
     text-transform: uppercase;
     color: var(--color-oscuro);
 }
 
+.cabecera__navegacion{
+    width: 20%;
+}
+
+.navegacion{
+    width: 20%;
+}
+
 .navegacion__identificacion{
     display: flex;
     justify-content: space-around;
     align-items: center;
-    width: 20%;
     gap:0.5rem;
     padding:2rem;
     font-family: Montserrat;
@@ -87,7 +99,6 @@ main{
 }
 
 .navegacion__enlace {
-    width: 15%;
     color: var(--color-oscuro);
     font-weight: 600;
     font-size: 0.9rem;
