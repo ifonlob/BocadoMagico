@@ -297,3 +297,24 @@ main{
     transition: all 0.3s ease;
     color: #B57B72;
 }
+
+#apartadoUsuario {
+    display: none;
+    width: 100%;
+    background-color: #fcfcfc;
+    padding: 40px 0;
+    border-top: 1px solid #f0f0f0;
+    margin-top: 20px;
+    text-align: center;
+}
+
+#apartadoUsuario .introduccion__titulo {
+    color: #2c3e50;
+    margin-bottom: 15px;
+}
+
+#apartadoUsuario .introduccion__descripcion {
+    max-width: 800px;
+    margin: 10px auto;
+    line-height: 1.6;
+}
