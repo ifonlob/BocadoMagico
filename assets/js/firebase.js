@@ -4,10 +4,10 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebas
 import {
     getAuth,
     signInWithEmailAndPassword,
-    createUserWithEmailAndPassword
+    createUserWithEmailAndPassword,
+    signOut
 } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
 
-// --- CONFIGURACIÓN DE FIREBASE ---
 const configuracionFirebase = {
     apiKey: "AIzaSyBcuDoChegnRreOvK6uBxLayV8dlBLtwsE",
     authDomain: "bocadomagico-30a9f.firebaseapp.com",
@@ -21,82 +21,95 @@ const configuracionFirebase = {
 const aplicacion = initializeApp(configuracionFirebase);
 const autenticacion = getAuth(aplicacion);
 
-
-
-/**
- * Muestra mensajes de feedback (éxito o error) en el formulario
- */
-const mostrarFeedback = (formulario, mensaje, clase) => {
-    const errorPrevio = formulario.querySelector(".mensaje-error, .mensaje-exito");
-    if (errorPrevio) errorPrevio.remove();
-
-    const parrafo = document.createElement("p");
-    parrafo.classList.add(clase);
-    parrafo.textContent = mensaje;
-    formulario.append(parrafo);
-
-    setTimeout(() => parrafo.remove(), 4000);
-};
-
-/**
- * Lógica para iniciar sesión
- */
-const servicioLogin = async (formulario, correo, contrasena) => {
+const cerrarSesion = async () => {
     try {
-        await signInWithEmailAndPassword(autenticacion, correo, contrasena);
-        mostrarFeedback(formulario, "¡Acceso concedido! Redirigiendo...", "mensaje-exito");
-        setTimeout(() => window.location.href = "bienvenida.html", 1000);
+        await signOut(autenticacion);
+        localStorage.removeItem("usuarioSesion");
+        window.location.href = "index.html";
     } catch (error) {
-        if (error.code === 'auth/invalid-credential') {
-            mostrarFeedback(formulario, "Usuario o contraseña incorrectos", "mensaje-error");
-        } else {
-            mostrarFeedback(formulario, "Error al conectar. Inténtalo de nuevo.", "mensaje-error");
-        }
-        formulario.querySelector("#password").value = "";
+        console.error("Error al cerrar sesión:", error);
     }
 };
 
-/**
- * Lógica para registrar un nuevo usuario
- */
+const gestionarNavegacion = () => {
+    const contenedorNav = document.querySelector(".cabecera__navegacion");
+    const sesionActiva = localStorage.getItem("usuarioSesion");
+
+    const esPaginaAuth = document.getElementById('formularioLogin') || document.getElementById('formularioRegistro');
+
+    if (contenedorNav && sesionActiva && !esPaginaAuth) {
+        contenedorNav.innerHTML = `
+            <ul class="navegacion__lista">
+                <li class="navegacion__identificacion">
+                    <img class="navegacion__usuario" src="./assets/imgs/usuario.png" alt="Usuario">
+                    <a href="#" class="navegacion__enlace" id="btnCerrarSesion">Cerrar Sesión</a>
+                </li>
+            </ul>
+        `;
+
+        const btnCerrar = document.getElementById("btnCerrarSesion");
+        if (btnCerrar) {
+            btnCerrar.addEventListener("click", (e) => {
+                e.preventDefault();
+                cerrarSesion();
+            });
+        }
+    }
+};
+
+const servicioLogin = async (formulario, correo, contrasena) => {
+    try {
+        const credencial = await signInWithEmailAndPassword(autenticacion, correo, contrasena);
+        localStorage.setItem("usuarioSesion", credencial.user.email);
+        window.location.href = "bienvenida-login.html";
+    } catch (error) {
+        alert("Usuario o contraseña incorrectos");
+    }
+};
+
 const servicioRegistro = async (formulario, correo, contrasena) => {
     try {
-        await createUserWithEmailAndPassword(autenticacion, correo, contrasena);
-        mostrarFeedback(formulario, "¡Cuenta creada con éxito! Redirigiendo...", "mensaje-exito");
-        setTimeout(() => window.location.href = "bienvenida.html", 1500);
+        const credencial = await createUserWithEmailAndPassword(autenticacion, correo, contrasena);
+        localStorage.setItem("usuarioSesion", credencial.user.email);
+        window.location.href = "bienvenida-registro.html";
     } catch (error) {
-        if (error.code === 'auth/email-already-in-use') {
-            mostrarFeedback(formulario, "El correo ya está registrado.", "mensaje-error");
-        } else if (error.code === 'auth/weak-password') {
-            mostrarFeedback(formulario, "La contraseña es muy débil.", "mensaje-error");
-        } else {
-            mostrarFeedback(formulario, "Error en el registro. Inténtalo de nuevo.", "mensaje-error");
-        }
+        alert("Error: El correo ya existe o los datos son inválidos");
+    }
+};
+
+
+const manejarRedireccionBienvenida = () => {
+    const paginaActual = document.body.dataset.pagina;
+    if (paginaActual === "bienvenida-registro" || paginaActual === "bienvenida-login") {
+        setTimeout(() => {
+            window.location.href = "index.html";
+        }, 5000);
     }
 };
 
 
 document.addEventListener('DOMContentLoaded', () => {
-    const formularioLogin = document.getElementById('formularioLogin');
-    const formularioRegistro = document.getElementById('formularioRegistro');
+    gestionarNavegacion();
+    manejarRedireccionBienvenida();
 
-    // Configuración para la página de Login
-    if (formularioLogin) {
-        formularioLogin.addEventListener('submit', (evento) => {
-            evento.preventDefault();
+    const formLogin = document.getElementById('formularioLogin');
+    const formRegistro = document.getElementById('formularioRegistro');
+
+    if (formLogin) {
+        formLogin.addEventListener('submit', (e) => {
+            e.preventDefault();
             const correo = document.getElementById('usuario').value.trim();
             const contrasena = document.getElementById('password').value.trim();
-            servicioLogin(formularioLogin, correo, contrasena);
+            servicioLogin(formLogin, correo, contrasena);
         });
     }
 
-    // Configuración para la página de Registro
-    if (formularioRegistro) {
-        formularioRegistro.addEventListener('submit', (evento) => {
-            evento.preventDefault();
+    if (formRegistro) {
+        formRegistro.addEventListener('submit', (e) => {
+            e.preventDefault();
             const correo = document.getElementById('registroEmail').value.trim();
             const contrasena = document.getElementById('registroPassword').value.trim();
-            servicioRegistro(formularioRegistro, correo, contrasena);
+            servicioRegistro(formRegistro, correo, contrasena);
         });
     }
 });
