@@ -43,12 +43,17 @@ Ejecuta el siguiente comando en tu terminal para construir la imagen web y levan
 
 > docker-compose up -d --build
 
+**Nota**: En algunos casos será necesario aportarle privilegios de superusuario mediante `sudo`
+
 **Paso 3: Obtener el dominio generado (Quick Tunnel)**
 Dado que el archivo `docker-compose.yml` no especifica un token de Cloudflare preconfigurado, el contenedor creará automáticamente un **Quick Tunnel** (túnel rápido y temporal) asignando un subdominio aleatorio bajo la terminación `.trycloudflare.com`.
 
 Para descubrir cuál es la URL pública que se te ha asignado, debes revisar los logs del contenedor de Cloudflare ejecutando el siguiente comando:
 
 > docker logs bocado_tunnel
+
+**Nota**: En algunos casos será necesario aportarle privilegios de superusuario mediante `sudo`
+
 
 **Paso 4: Acceder a la aplicación**
 En la salida de los logs, busca un bloque de texto que contenga unas líneas similares a estas:
