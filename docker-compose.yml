@@ -1,17 +1,16 @@
-version: '3.8'
-
 services:
   bocado-magico:
     build: .
     container_name: bocado_magico_app
-    expose:
-      - "443"
+    ports:
+      - "80:80"
+      - "443:443"
     restart: always
 
   cloudflared:
     image: cloudflare/cloudflared:latest
     container_name: bocado_tunnel
-    command: tunnel --url https://bocado-magico:443 --no-autoupdate --no-tls-verify
+    command: tunnel --url https://bocado-magico:443 --no-autoupdate --no-tls-verify --protocol http2
     restart: always
     depends_on:
       - bocado-magico
